@@ -35,4 +35,12 @@ class ValidatorTest extends \Codeception\TestCase\Test {
     $this->assertFalse($value);
     $this->assertTrue($name);
   }
+
+  function test_validate_max_lengths() {
+    $fields_with_max_lengths = array('name' => '10', 'username' => '5');
+    $values = array('name' => "John", 'username' => "userjohn");
+    Validator::validate_max_lengths($fields_with_max_lengths, $values);
+
+    $this->assertEquals( "Username is too long", Validator::errors()['username'] );
+  }
 }

@@ -25,6 +25,16 @@ abstract class Validator {
 		return strlen($value) <= $max;
 	}
 
+	static function validate_max_lengths($fields_with_max_lengths, $values) {
+		// Expects an assoc. array
+		foreach($fields_with_max_lengths as $field => $max) {
+			$value = trim($values[$field]);
+		  if (!self::has_max_length($value, $max)) {
+		    self::$errors[$field] = self::fieldname_as_text($field) . " is too long";
+		  }
+		}
+	}
+
 	private static function fieldname_as_text($fieldname) {
 		$fieldname = str_replace("-", " ", $fieldname);
   	$fieldname = ucfirst($fieldname);
