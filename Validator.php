@@ -21,6 +21,10 @@ abstract class Validator {
   	}
 	}
 
+	static function has_max_length($value, $max) {
+		return strlen($value) <= $max;
+	}
+
 	private static function fieldname_as_text($fieldname) {
 		$fieldname = str_replace("-", " ", $fieldname);
   	$fieldname = ucfirst($fieldname);

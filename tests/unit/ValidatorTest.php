@@ -8,7 +8,7 @@ class ValidatorTest extends \Codeception\TestCase\Test {
     $empty_value_with_spaces = Validator::has_presence( trim("    ") );
 
     $this->assertFalse($empty_value_with_spaces);
-    $this->assertEquals(true, $value);
+    $this->assertTrue($value);
   }
 
   function test_validate_presences() {
@@ -30,7 +30,9 @@ class ValidatorTest extends \Codeception\TestCase\Test {
 
   function test_has_max_length() {
     $value = Validator::has_max_length("Some random", 10);
+    $name = Validator::has_max_length("Name", 10);
 
-    $this->assertEquals(true, $value);
+    $this->assertFalse($value);
+    $this->assertTrue($name);
   }
 }
