@@ -27,4 +27,10 @@ class ValidatorTest extends \Codeception\TestCase\Test {
 
     $this->assertEquals( "Last name can't be blank", Validator::errors()["last-name"] );
   }
+
+  function test_has_max_length() {
+    $value = Validator::has_max_length("Some random", 10);
+
+    $this->assertEquals(true, $value);
+  }
 }
