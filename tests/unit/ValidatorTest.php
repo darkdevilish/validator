@@ -1,24 +1,13 @@
 <?php
 
 
-class ValidatorTest extends \Codeception\TestCase\Test
-{
-    /**
-     * @var \UnitTester
-     */
-    protected $tester;
+class ValidatorTest extends \Codeception\TestCase\Test {
 
-    protected function _before()
-    {
-    }
+  function test_has_presence() {
+    $value = Validator::has_presence("value");
+    $empty_value_with_spaces = Validator::has_presence("    ");
 
-    protected function _after()
-    {
-    }
-
-    // tests
-    public function testMe()
-    {
-
-    }
+    $this->assertFalse($empty_value_with_spaces);
+    $this->assertEquals(true, $value);
+  }
 }
