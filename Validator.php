@@ -5,7 +5,10 @@ abstract class Validator {
 	private static $errors = array();
 
 	static function errors() {
-		return self::$errors;
+		if(!empty(self::$errors)) {
+			return self::$errors;
+		}
+		return false;
 	}
 
 	static function validate_presences($required_fields) {
@@ -17,13 +20,38 @@ abstract class Validator {
   	}
 	}
 
-	static function validate_max_lengths($fields_with_max_lengths, $values) {
+	static function validate_lengths($fields_with_options, $values) {
 		// Expects an assoc. array
-		foreach($fields_with_max_lengths as $field => $max) {
+		foreach($fields_with_options as $field => $option) {
 			$value = trim($values[$field]);
-		  if (!self::has_max_length($value, $max)) {
-		    self::$errors[$field] = self::fieldname_as_text($field) . " is too long";
+		  if (!self::has_length($value, $option)) {
+		    self::$errors[$field] = self::fieldname_as_text($field).self::length_error_msg($option);
 		  }
+		}
+	}
+
+	static function has_length($value, $options=array()) {
+		if(isset($options['max']) && (strlen($value) > (int)$options['max'])) {
+			return false;
+		}
+		if(isset($options['min']) && (strlen($value) < (int)$options['min'])) {
+			return false;
+		}
+		if(isset($options['exact']) && (strlen($value) != (int)$options['exact'])) {
+			return false;
+		}
+		return true;
+	}
+
+	private static function length_error_msg($options) {
+		if(isset( $options['max'] )) {
+			return " is too long ({$options['max']} characters maximum)";
+		}
+		if(isset( $options['min'] )) {
+			return " is too short ({$options['min']} characters minimum)";
+		}
+		if(isset( $options['exact'] )) {
+			return " does not match {$options['exact']} characters";
 		}
 	}
 
@@ -35,10 +63,6 @@ abstract class Validator {
 
 	private static function has_presence($value) {
 		return isset($value) && $value !== "";
-	}
-
-	private static function has_max_length($value, $max) {
-		return strlen($value) <= $max;
 	}
 
 }
