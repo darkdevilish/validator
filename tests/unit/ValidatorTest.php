@@ -3,14 +3,6 @@
 
 class ValidatorTest extends \Codeception\TestCase\Test {
 
-  function test_has_presence() {
-    $value = Validator::has_presence("value");
-    $empty_value_with_spaces = Validator::has_presence( trim("    ") );
-
-    $this->assertFalse($empty_value_with_spaces);
-    $this->assertTrue($value);
-  }
-
   function test_validate_presences() {
     $values = array('name' => 'John', 'username' => 'chacala');
     $empty_values = array('name' => '     ', 'username' => '    ');
@@ -26,14 +18,6 @@ class ValidatorTest extends \Codeception\TestCase\Test {
     Validator::validate_presences($empty_value);
 
     $this->assertEquals( "Last name can't be blank", Validator::errors()["last-name"] );
-  }
-
-  function test_has_max_length() {
-    $value = Validator::has_max_length("Some random", 10);
-    $name = Validator::has_max_length("Name", 10);
-
-    $this->assertFalse($value);
-    $this->assertTrue($name);
   }
 
   function test_validate_max_lengths() {

@@ -8,10 +8,6 @@ abstract class Validator {
 		return self::$errors;
 	}
 
-	static function has_presence($value) {
-		return isset($value) && $value !== "";
-	}
-
 	static function validate_presences($required_fields) {
 		foreach($required_fields as $field=>$value) {
     	$value = trim($value);
@@ -19,10 +15,6 @@ abstract class Validator {
   			self::$errors[$field] = self::fieldname_as_text($field) . " can't be blank";
   		}
   	}
-	}
-
-	static function has_max_length($value, $max) {
-		return strlen($value) <= $max;
 	}
 
 	static function validate_max_lengths($fields_with_max_lengths, $values) {
@@ -39,6 +31,14 @@ abstract class Validator {
 		$fieldname = str_replace("-", " ", $fieldname);
   	$fieldname = ucfirst($fieldname);
   	return $fieldname;
+	}
+
+	private static function has_presence($value) {
+		return isset($value) && $value !== "";
+	}
+
+	private static function has_max_length($value, $max) {
+		return strlen($value) <= $max;
 	}
 
 }
