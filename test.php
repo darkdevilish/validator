@@ -1,5 +1,5 @@
 <?php
-
+require 'Validator.php';
 $validates = array( 
 	'name' => array( 'presence', array( 'max_length' => array( 'min' => 20, 'max' => 15 ) ) ),
 	'username' => array( array( 'max_length' => array( 'max' => 15, 'min' => 10 ) ), 'presence' )
@@ -16,3 +16,6 @@ foreach($validates as $property=>$method) {
 		}
 	}
 }
+
+forward_static_call_array(array('Validator', "validate_presences"), array( array('name' => '') ));
+var_dump(Validator::errors());
