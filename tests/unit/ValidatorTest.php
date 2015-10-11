@@ -20,6 +20,13 @@ class ValidatorTest extends \Codeception\TestCase\Test {
     $this->assertContains( "Last name can't be blank", Validator::errors() );
   }
 
+  function test_validate_email() {
+    $email = array('email' => "some_email");
+    Validator::validate_email($email);
+
+    $this->assertEquals("Email address (some_email) is invalid", Validator::errors()['email']);
+  }
+
   function test_validate_lengths() {
     $fields_with_options = array(
       'name' => array('max' => 3, 'min' => 10), 

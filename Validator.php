@@ -20,6 +20,16 @@ abstract class Validator {
     }
   }
 
+  static function validate_email($required_field) {
+    foreach($required_field as $field => $email) {
+      $email = trim($email);
+      if( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
+        $msg = " address ({$email}) is invalid";
+        self::$errors[$field] = self::fieldname_as_text($field) . $msg;
+      }
+    }
+  }
+
   static function validate_lengths($fields_with_options, $values) {
     // Expects an assoc. array
     foreach($fields_with_options as $field => $option) {
