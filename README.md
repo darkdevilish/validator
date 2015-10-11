@@ -13,6 +13,15 @@ $values = array('name' => 'John', 'username' => 'chacala');
 Validator::validate_presences($values);
 ```
 
+### Validate that input is a valid email address
+
+It takes an associative array of value of email and name as key, if invalid it will add name of value capitalize address (email) is invalid to errors array:
+
+```php
+$email = array('email' => "john@doe.com");
+Validator::validate_email($email);
+```
+
 ### Validate length of input
 
 It takes 2 parameter both associative arrays, one with the name of input and options, and the other one with name of input and value, thera are 3 options max, min, exact or both max and min. If found errors it will store in the errors array the following: name of input is too short (number characters minimum), name of input is too long (number characters maximum), name of input does not match number characters. Example usage:
